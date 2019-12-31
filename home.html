@@ -16,6 +16,8 @@
     <br>
 
     <h3>Period:</h3><h3>Time Remaining:</h3>
+
+    <div id='root'>
     <table id="scores">
       <tr>
         <th>Team</th>
@@ -39,6 +41,7 @@
         <td id="awayScore"></td>
       </tr>
     </table>
+    </div>
 
     <script language="javascript" type="text/javascript">
         var tds = document.getElementById('scores').getElementsByTagName('td');
@@ -59,6 +62,42 @@
 
         document.getElementById('homeScore').innerHTML = homeSum;
         document.getElementById('awayScore').innerHTML = awaySum;
+
+    </script>
+
+
+    <script language="javascript" type="text/javascript">
+
+    //Create request variable
+    var request = new XMLHttpRequest()
+
+    request.open('GET', 'https://statsapi.web.nhl.com/api/v1/game/2019020622/feed/live', true)
+    request.onload = function() {
+      var data = JSON.parse(this.response)
+
+      if (request.status >= 200 && request.status < 400) {
+        data.forEach(teams => {
+
+        //get each team name
+        console.log(teams.name)
+        })
+      } else {
+        console.log('error')
+      }
+
+      const app = document.getElementById('root')
+      const container = document.createElement('div')
+      containter.setAttribute('class','containter')
+
+      app.appendChild(container)
+
+
+
+    }
+
+    request.send()
+
+
 
     </script>
 
