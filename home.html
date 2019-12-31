@@ -69,36 +69,33 @@
     <script language="javascript" type="text/javascript">
 
     //Create request variable
-    var request = new XMLHttpRequest()
+    var request = new XMLHttpRequest();
 
-    request.open('GET', 'https://statsapi.web.nhl.com/api/v1/game/2019020622/feed/live', true)
+    request.open('GET', 'https://statsapi.web.nhl.com/api/v1/game/2019020622/feed/live', true);
     request.onload = function() {
-      var data = JSON.parse(this.response)
+      var data = JSON.parse(this.response);
 
       if (request.status >= 200 && request.status < 400) {
-        data.forEach(teams => {
+        data.forEach(team => {
 
         //get each team name
-        console.log(teams.name)
-        })
+        console.log(team.name);
+        });
       } else {
-        console.log('error')
+        console.log('error');
       }
 
-      const app = document.getElementById('root')
-      const container = document.createElement('div')
-      containter.setAttribute('class','containter')
+      const app = document.getElementById('root');
+      const container = document.createElement('div');
+      containter.setAttribute('class','containter');
 
-      app.appendChild(container)
-
-
-
-    }
-
-    request.send()
+      app.appendChild(container);
 
 
 
+    };
+
+    request.send();
     </script>
 
   </body>
