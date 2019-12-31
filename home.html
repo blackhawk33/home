@@ -13,5 +13,54 @@
     <p>Hope of this website is to pull the scoreboard for the Chicago Blackhawks using an NHL api and display the score below. Potentially use other information
     where possible.</p>
 
+    <br>
+
+    <h3>Period:</h3><h3>Time Remaining:</h3>
+    <table id="scores">
+      <tr>
+        <th>Team</th>
+        <th>Period 1</th>
+        <th>Period 2</th>
+        <th>Period 3</th>
+        <th>Score</th>
+      </tr>
+      <tr>
+        <td>Blackhawks</td>
+        <td class="home">1</td>
+        <td class="home">1</td>
+        <td class="home">2</td>
+        <td id="homeScore"></td>
+      </tr>
+      <tr>
+        <td>Blues</td>
+        <td class="away">1</td>
+        <td class="away">0</td>
+        <td class="away">1</td>
+        <td id="awayScore"></td>
+      </tr>
+    </table>
+
+    <script language="javascript" type="text/javascript">
+        var tds = document.getElementById('scores').getElementsByTagName('td');
+
+        var homeSum = 0;
+        for(var i = 0; i < tds.length; i ++) {
+            if(tds[i].className == 'home') {
+                homeSum += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
+            }
+        }
+
+        var awaySum = 0;
+        for(var j = 0; j < tds.length; j ++) {
+            if(tds[j].className == 'away') {
+                awaySum += isNaN(tds[j].innerHTML) ? 0 : parseInt(tds[j].innerHTML);
+            }
+        }
+
+        document.getElementById('homeScore').innerHTML = homeSum;
+        document.getElementById('awayScore').innerHTML = awaySum;
+
+    </script>
+
   </body>
 </html>

@@ -1,13 +1,20 @@
 body {
-  background-color:rgb(207,10,44);
+  background-color:rgb(255,255,255);
 }
 h1 {
   color: white;
+  background-color:rgb(207,10,44);
 }
 p {
-  color: white;
+  color: black;
 }
-
+table {
+  border-collapse: collapse;
+}
+table, th, td {
+  color: rgb(207,10,44);
+  border: 1px solid black;
+}
 
 
 /*RGB Colors for blackhawks
