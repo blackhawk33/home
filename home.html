@@ -4,6 +4,7 @@
 
   <head>
     <link type="text/css" rel="stylesheet" href="styles.css">
+
     <title>Blackhawks Scoreboard</title>
   </head>
 
@@ -15,7 +16,7 @@
 
     <br>
 
-    <h3>Period:</h3><h3>Time Remaining:</h3>
+    <h3 id='period'></h3><h3 id='timeRemaining'></h3>
 
     <div id='root'>
     <table id="scores">
@@ -27,21 +28,44 @@
         <th>Score</th>
       </tr>
       <tr>
-        <td>Blackhawks</td>
-        <td class="home">1</td>
-        <td class="home">1</td>
-        <td class="home">2</td>
+        <td id="home-team"></td>
+        <td id="home-1" class="home"></td>
+        <td id="home-2" class="home"></td>
+        <td id="home-3" class="home"></td>
         <td id="homeScore"></td>
       </tr>
       <tr>
-        <td>Blues</td>
-        <td class="away">1</td>
-        <td class="away">0</td>
-        <td class="away">1</td>
+        <td id="away-team"></td>
+        <td id="away-1" class="away"></td>
+        <td id="away-2" class="away"></td>
+        <td id="away-3" class="away"></td>
         <td id="awayScore"></td>
       </tr>
     </table>
     </div>
+
+    <script language="javascript" type="text/javascript">
+
+      fetch('https://statsapi.web.nhl.com/api/v1/game/2019020600/feed/live')
+        .then(response=> {
+          return response.json();
+        })
+        .then(data=> {
+          document.getElementById('home-team').innerHTML = data.gameData.teams.home.teamName;
+          document.getElementById('away-team').innerHTML = data.gameData.teams.away.teamName;
+          document.getElementById('period').innerHTML = 'Period: ' + data.liveData.linescore.currentPeriod;
+          document.getElementById('timeRemaining').innerHTML = 'Time Remaining: ' + data.liveData.plays.currentPlay.about.periodTimeRemaining;
+
+          document.getElementById('home-1').innerHTML = data.liveData.linescore.periods[0].home.goals;
+          document.getElementById('home-2').innerHTML = data.liveData.linescore.periods[1].home.goals;
+          document.getElementById('home-3').innerHTML = data.liveData.linescore.periods[2].home.goals;
+
+          document.getElementById('away-1').innerHTML = data.liveData.linescore.periods[0].away.goals;
+          document.getElementById('away-2').innerHTML = data.liveData.linescore.periods[1].away.goals;
+          document.getElementById('away-3').innerHTML = data.liveData.linescore.periods[2].away.goals;
+
+        });
+    </script>
 
     <script language="javascript" type="text/javascript">
         var tds = document.getElementById('scores').getElementsByTagName('td');
@@ -65,38 +89,10 @@
 
     </script>
 
-
-    <script language="javascript" type="text/javascript">
-
-    //Create request variable
-    var request = new XMLHttpRequest();
-
-    request.open('GET', 'https://statsapi.web.nhl.com/api/v1/game/2019020622/feed/live', true);
-    request.onload = function() {
-      var data = JSON.parse(this.response);
-
-      if (request.status >= 200 && request.status < 400) {
-        data.quotesArray.forEach(team => {
-
-        //get each team name
-        console.log(team.name);
-        });
-      } else {
-        console.log('error');
-      }
-
-      const app = document.getElementById('root');
-      const container = document.createElement('div');
-      containter.setAttribute('class','containter');
-
-      app.appendChild(container);
+<!--ID: 622-->
 
 
-
-    };
-
-    request.send();
-    </script>
 
   </body>
 </html>
+
