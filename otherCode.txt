@@ -1,0 +1,8 @@
+#javascript for prompting username before opening file
+<script>
+        var username = prompt("Enter your name: ", "");
+        document.write("<h1>Hello, " + username + "!</h1>");
+</script>
+
+website for some java code examples
+https://www.ntu.edu.sg/home/ehchua/programming/webprogramming/JavaScript_Introduction.html
