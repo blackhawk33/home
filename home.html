@@ -16,29 +16,29 @@
 
     <br>
 
-    <h3 id='period'></h3><h3 id='timeRemaining'></h3>
+    <h3 id='period'>Status: Not Started</h3><h3 id='timeRemaining'></h3>
 
     <div id='root'>
     <table id="scores">
       <tr>
-        <th>Team</th>
+        <th id="team">Team</th>
         <th>Period 1</th>
         <th>Period 2</th>
         <th>Period 3</th>
         <th>Score</th>
       </tr>
       <tr>
-        <td id="home-team"></td>
-        <td id="home-1" class="home"></td>
-        <td id="home-2" class="home"></td>
-        <td id="home-3" class="home"></td>
+        <td id="home-team" div="teamName"></td>
+        <td id="home-1" ></td>
+        <td id="home-2" ></td>
+        <td id="home-3" ></td>
         <td id="homeScore"></td>
       </tr>
       <tr>
-        <td id="away-team"></td>
-        <td id="away-1" class="away"></td>
-        <td id="away-2" class="away"></td>
-        <td id="away-3" class="away"></td>
+        <td id="away-team" div="teamName"></td>
+        <td id="away-1" ></td>
+        <td id="away-2" ></td>
+        <td id="away-3" ></td>
         <td id="awayScore"></td>
       </tr>
     </table>
@@ -46,15 +46,21 @@
 
     <script language="javascript" type="text/javascript">
 
-      fetch('https://statsapi.web.nhl.com/api/v1/game/2019020600/feed/live')
+      fetch('https://statsapi.web.nhl.com/api/v1/game/2019020615/feed/live')
         .then(response=> {
           return response.json();
         })
         .then(data=> {
           document.getElementById('home-team').innerHTML = data.gameData.teams.home.teamName;
           document.getElementById('away-team').innerHTML = data.gameData.teams.away.teamName;
-          document.getElementById('period').innerHTML = 'Period: ' + data.liveData.linescore.currentPeriod;
-          document.getElementById('timeRemaining').innerHTML = 'Time Remaining: ' + data.liveData.plays.currentPlay.about.periodTimeRemaining;
+
+
+          if (data.gameData.status.detailedState == 'Scheduled') {
+            document.getElementById('timeRemaining').innerHTML = 'Game Time: ' + data.gameData.datetime.dateTime;
+          } else {
+            document.getElementById('timeRemaining').innerHTML = 'Time Remaining: ' + data.liveData.plays.currentPlay.about.periodTimeRemaining;
+            document.getElementById('period').innerHTML = 'Period: ' + data.liveData.linescore.currentPeriod;
+          }
 
           document.getElementById('home-1').innerHTML = data.liveData.linescore.periods[0].home.goals;
           document.getElementById('home-2').innerHTML = data.liveData.linescore.periods[1].home.goals;
@@ -63,7 +69,6 @@
           document.getElementById('away-1').innerHTML = data.liveData.linescore.periods[0].away.goals;
           document.getElementById('away-2').innerHTML = data.liveData.linescore.periods[1].away.goals;
           document.getElementById('away-3').innerHTML = data.liveData.linescore.periods[2].away.goals;
-
         });
     </script>
 
@@ -72,14 +77,14 @@
 
         var homeSum = 0;
         for(var i = 0; i < tds.length; i ++) {
-            if(tds[i].className == 'home') {
+            if(tds[i].id == 'home-'+(i+1)) {
                 homeSum += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
             }
         }
 
         var awaySum = 0;
         for(var j = 0; j < tds.length; j ++) {
-            if(tds[j].className == 'away') {
+            if(tds[j].id == 'away-'+(j+1)) {
                 awaySum += isNaN(tds[j].innerHTML) ? 0 : parseInt(tds[j].innerHTML);
             }
         }

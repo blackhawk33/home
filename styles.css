@@ -15,6 +15,13 @@ table, th, td {
   color: rgb(207,10,44);
   border: 1px solid black;
 }
+#home-team, #away-team, #team {
+  text-align:left  ;
+}
+td {
+  text-align:center;
+  color: rgb(0,0,0);
+}
 
 
 /*RGB Colors for blackhawks
