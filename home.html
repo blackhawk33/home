@@ -3,18 +3,14 @@
 <html lang="en">
 
   <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="styles.css">
-
     <title>Blackhawks Scoreboard</title>
   </head>
 
   <body>
     <h1>Scoreboard</h1>
 
-    <p>Hope of this website is to pull the scoreboard for the Chicago Blackhawks using an NHL api and display the score below. Potentially use other information
-    where possible.</p>
-
-    <br>
 
     <h3 id='period'>Status: Not Started</h3><h3 id='timeRemaining'></h3>
 
@@ -46,7 +42,7 @@
 
     <script language="javascript" type="text/javascript">
 
-      fetch('https://statsapi.web.nhl.com/api/v1/game/2019020615/feed/live')
+      fetch('https://statsapi.web.nhl.com/api/v1/game/2019020622/feed/live')
         .then(response=> {
           return response.json();
         })
@@ -69,34 +65,20 @@
           document.getElementById('away-1').innerHTML = data.liveData.linescore.periods[0].away.goals;
           document.getElementById('away-2').innerHTML = data.liveData.linescore.periods[1].away.goals;
           document.getElementById('away-3').innerHTML = data.liveData.linescore.periods[2].away.goals;
+
+          homeSum = data.liveData.linescore.periods[0].home.goals + data.liveData.linescore.periods[1].home.goals + data.liveData.linescore.periods[2].home.goals;
+          awaySum = data.liveData.linescore.periods[0].away.goals + data.liveData.linescore.periods[1].away.goals + data.liveData.linescore.periods[2].away.goals;
+
+          document.getElementById('homeScore').innerHTML = homeSum;
+          document.getElementById('awayScore').innerHTML = awaySum;
         });
-    </script>
-
-    <script language="javascript" type="text/javascript">
-        var tds = document.getElementById('scores').getElementsByTagName('td');
-
-        var homeSum = 0;
-        for(var i = 0; i < tds.length; i ++) {
-            if(tds[i].id == 'home-'+(i+1)) {
-                homeSum += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
-            }
-        }
-
-        var awaySum = 0;
-        for(var j = 0; j < tds.length; j ++) {
-            if(tds[j].id == 'away-'+(j+1)) {
-                awaySum += isNaN(tds[j].innerHTML) ? 0 : parseInt(tds[j].innerHTML);
-            }
-        }
-
-        document.getElementById('homeScore').innerHTML = homeSum;
-        document.getElementById('awayScore').innerHTML = awaySum;
 
     </script>
 
-<!--ID: 622-->
 
-
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
   </body>
 </html>
